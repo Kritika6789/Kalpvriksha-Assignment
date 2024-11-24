@@ -10,16 +10,32 @@ void createFile(FILE *fptr){
 }
 void createUser(FILE* fptr){
     fptr=fopen("Users.txt","a");
+    FILE *temp=fopen("Users.txt","r");
+    int id;
+    printf("Enter id:");
+    scanf("%d",&id);
     Users user;
+    int found=0;
+     while(fscanf(temp,"%s %d %d \n",user.name,&user.id,&user.age)!=EOF){
+          if(user.id==id){
+            found=1;
+            break;
+          }
+        }
+        fclose(temp);
+        if(found==1){
+            printf("Id already exist\n");
+        }
+        else{
     printf("Enter User Name:");
     scanf("%s",user.name);
-    printf("enter id:");
-    scanf("%d",&user.id);
+   user.id=id;
     printf("enter age:");
     scanf("%d",&user.age);
     fprintf(fptr,"%s %d %d \n",user.name,user.id,user.age);
-    fclose(fptr);
     printf("User added \n");
+        }
+        fclose(fptr);
 }
 void dispayUser(FILE *fptr){
     Users user;
@@ -52,8 +68,8 @@ void updateUser(FILE *fptr){
              printf("%s\t%d\t%d\t",user.name,user.id,user.age);
              printf("Enter User Name:");
             scanf("%s",user.name);
-            printf("Enter Id:");
-            scanf("%d",&user.id);
+            // printf("Enter Id:");
+            // scanf("%d",&user.id);
             printf("enter age:");
             scanf("%d",&user.age);
            }
